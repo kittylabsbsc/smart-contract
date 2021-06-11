@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 
 
-pragma solidity = 0.5.17;
+pragma solidity ^0.5.17;
 
 
 
@@ -169,14 +169,14 @@ contract BEP20 is IBEP20 {
 
 contract KittyToken is BEP20 {
 
-    bytes32 private _name;
-    bytes32 private _symbol;
-    uint8 private _decimals = 18;
+    string private _name;
+    string private _symbol;
+    uint8 private _decimals;
 
-    constructor(bytes32 name, bytes32 symbol, uint256 totalSupply, address payable feeReceiver, address tokenOwnerAddress) public payable {
+    constructor(string memory name, string memory symbol, uint8 decimals, uint256 totalSupply, address payable feeReceiver, address tokenOwnerAddress) public payable {
       _name = name;
       _symbol = symbol;
-
+      _decimals = decimals;
 
      _mint(tokenOwnerAddress, totalSupply);
       feeReceiver.transfer(msg.value);
@@ -186,11 +186,11 @@ contract KittyToken is BEP20 {
       _burn(msg.sender, value);
     }
 
-    function name() public view returns (bytes32) {
+    function name() public view returns (string memory) {
       return _name;
     }
 
-   function symbol() public view returns (bytes32) {
+   function symbol() public view returns (string memory) {
       return _symbol;
     }
 
